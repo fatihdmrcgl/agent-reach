@@ -1,0 +1,25 @@
+{
+  "name": "agent-reach",
+  "version": "0.1.0",
+  "description": "Open-source access layer for AI agents to reach GitHub, Reddit, YouTube, X, Instagram, and similar sources.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "example": "node examples/research-agent.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "ai-agent",
+    "connectors",
+    "github",
+    "reddit",
+    "youtube",
+    "x",
+    "instagram"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
