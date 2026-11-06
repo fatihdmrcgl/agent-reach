@@ -1,0 +1,42 @@
+name: Instagram photo gallery - Ramada Nigde
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_posts:
+        description: "Check this many recent posts (1 to 30)"
+        required: false
+        default: "12"
+  push:
+    paths:
+      - .github/workflows/instagram-gallery.yml
+      - scripts/download_instagram_gallery.py
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-public-photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Instaloader
+        run: python -m pip install 'instaloader>=4.14,<5'
+      - name: Try to fetch public hotel photos
+        run: >-
+          python scripts/download_instagram_gallery.py
+          --username ramadabywyndhamnigde
+          --max-posts "${{ github.event.inputs.max_posts || '12' }}"
+          --output instagram-output
+      - name: Archive results and access report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ramada-nigde-instagram-gallery
+          path: instagram-output/
+          if-no-files-found: warn
+          retention-days: 3
